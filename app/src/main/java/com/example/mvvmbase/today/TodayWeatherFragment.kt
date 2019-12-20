@@ -38,14 +38,18 @@ class TodayWeatherFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TodayWeatherViewModel::class.java)
 
         val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
-        val weatherNetworkDataSource=WeatherNetworkDataSourceImpl(apiService)
+//        val weatherNetworkDataSource=WeatherNetworkDataSourceImpl(apiService)
+//
+//        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
+//            tvText.text=it.toString()
+//        })
+//        GlobalScope.launch(Dispatchers.Main) {
+//           weatherNetworkDataSource.fetchCurrentWeather("London","en")
+//        }
 
-        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
+        viewModel.getCurrentWeather("London","en").observe(this, Observer {
             tvText.text=it.toString()
         })
-        GlobalScope.launch(Dispatchers.Main) {
-           weatherNetworkDataSource.fetchCurrentWeather("London","en")
-        }
     }
 
 }
