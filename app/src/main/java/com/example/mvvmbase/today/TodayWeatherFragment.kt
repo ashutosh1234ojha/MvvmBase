@@ -12,10 +12,8 @@ import com.example.mvvmbase.R
 import com.example.mvvmbase.data.network.ApixuWeatherApiService
 import com.example.mvvmbase.data.network.ConnectivityInterceptorImpl
 import com.example.mvvmbase.data.network.WeatherNetworkDataSourceImpl
+import com.example.mvvmbase.utils.ProgressBar
 import kotlinx.android.synthetic.main.today_weather_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class TodayWeatherFragment : Fragment() {
 
@@ -40,12 +38,23 @@ class TodayWeatherFragment : Fragment() {
         val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
         val weatherNetworkDataSource=WeatherNetworkDataSourceImpl(apiService)
 
-        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
-            tvText.text=it.toString()
-        })
-        GlobalScope.launch(Dispatchers.Main) {
-           weatherNetworkDataSource.fetchCurrentWeather("London","en")
-        }
+//        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
+//            tvText.text=it.toString()
+//        })
+        viewModel._downloadedCurrentWeather.observe(this, Observer {
+            ProgressBar.dismiss()
+            tvText.text=it.toString()  }
+        )
+
+//        GlobalScope.launch(Dispatchers.Main) {
+//           weatherNetworkDataSource.fetchCurrentWeather("London","en")
+
+
+//        }
+
+        activity?.let { ProgressBar.show(it) }
+
+        viewModel.get("London","en")
     }
 
 }
