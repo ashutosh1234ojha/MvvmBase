@@ -34,27 +34,36 @@ class TodayWeatherFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TodayWeatherViewModel::class.java)
-
-        val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
-        val weatherNetworkDataSource=WeatherNetworkDataSourceImpl(apiService)
-
-//        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
-//            tvText.text=it.toString()
-//        })
-        viewModel._downloadedCurrentWeather.observe(this, Observer {
-            ProgressBar.dismiss()
-            tvText.text=it.toString()  }
-        )
-
-//        GlobalScope.launch(Dispatchers.Main) {
-//           weatherNetworkDataSource.fetchCurrentWeather("London","en")
-
-
-//        }
-
+//
+//        val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
+//        val weatherNetworkDataSource=WeatherNetworkDataSourceImpl(apiService)
+//
+////        weatherNetworkDataSource._downloadedCurrentWeather.observe(this, Observer {
+////            tvText.text=it.toString()
+////        })
+//        viewModel._downloadedCurrentWeather.observe(this, Observer {
+//            ProgressBar.dismiss()
+//            tvText.text=it.toString()  }
+//        )
+//
+////        GlobalScope.launch(Dispatchers.Main) {
+////           weatherNetworkDataSource.fetchCurrentWeather("London","en")
+//
+//
+////        }
+//
         activity?.let { ProgressBar.show(it) }
+//
+//        viewModel.get("London","en")
 
-        viewModel.get("London","en")
+        viewModel.liveBaseResponse.observe(this, Observer {
+
+            ProgressBar.dismiss()
+            tvText.text=it.toString()
+        })
+
+        viewModel.login("London","en")
+
     }
 
 }

@@ -1,27 +1,52 @@
 package com.example.mvvmbase.today
 
+import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mvvmbase.base.BaseResponse
+import com.example.mvvmbase.base.BaseViewModel
 import com.example.mvvmbase.data.network.response.CurrentWeatherResponse
 import com.example.mvvmbase.data.repository.ForecastRepositoryImpl
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class TodayWeatherViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class TodayWeatherViewModel (application: Application) : BaseViewModel(application) {
+    private val viewModelJob = SupervisorJob()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    var _downloadedCurrentWeather = MutableLiveData<CurrentWeatherResponse>()
+    fun validateLogin(): Boolean {
+        return true
+    }
 
 
-    fun get(location: String,lan: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            ForecastRepositoryImpl.fetchCurrentWeather(location,lan)
+     var liveBaseResponse=MutableLiveData<CurrentWeatherResponse>()
 
-        //   _downloadedCurrentWeather= ForecastRepositoryImpl.getView()
-            _downloadedCurrentWeather.postValue(ForecastRepositoryImpl.getView())
+
+    fun login(email: String, password: String) {
+//      GlobalScope.launch(Dispatchers.IO) {
+
+        uiScope.launch {
+              ForecastRepositoryImpl.login(email, password)
+
+            liveBaseResponse.postValue(ForecastRepositoryImpl.getView())
+            return@launch
         }
+
+        // return   LoginRepository.login(email,password)
+        // return liveBaseResponse
 
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }
+
+
+//     fun showLoader() {
+//
+//    }
+//
+//     fun hideLoader() {
+//    }
