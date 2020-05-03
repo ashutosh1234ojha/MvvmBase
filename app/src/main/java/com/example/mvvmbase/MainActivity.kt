@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.fragment.app.Fragment
 import com.example.mvvmbase.today.TodayWeatherFragment
+import com.example.mvvmbase.utils.PermissionHelper
 import kotlinx.android.synthetic.main.layout_header.*
 
 
@@ -58,4 +59,14 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionHelper.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 }

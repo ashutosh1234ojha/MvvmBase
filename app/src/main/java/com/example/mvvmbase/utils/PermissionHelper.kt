@@ -43,7 +43,7 @@ class PermissionHelper private constructor(private var activity: Activity) {
 
     fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>,
+        permissions: Array<out String>,
         grantResults: IntArray
     ) {
         when (requestCode) {

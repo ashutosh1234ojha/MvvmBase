@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MvvmBase.iml" filepath="$PROJECT_DIR$/MvvmBase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MvvmBase.iml" filepath="$PROJECT_DIR$/MvvmBase.iml" group="MvvmBase" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MvvmBase/app" />
     </modules>
   </component>
 </project>
