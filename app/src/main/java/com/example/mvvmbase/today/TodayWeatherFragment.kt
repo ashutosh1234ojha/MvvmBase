@@ -24,10 +24,7 @@ class TodayWeatherFragment : BaseFragment() {
         fun newInstance() = TodayWeatherFragment()
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        activity= context as MainActivity
-    }
+
 
     private lateinit var viewModel: TodayWeatherViewModel
 
