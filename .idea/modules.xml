@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MvvmBase.iml" filepath="$PROJECT_DIR$/MvvmBase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MvvmBase.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MvvmBase.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MVVMBase.iml" filepath="$PROJECT_DIR$/.idea/modules/MVVMBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MVVMBase.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MVVMBase.app.iml" />
     </modules>
   </component>
 </project>
