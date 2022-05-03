@@ -2,6 +2,8 @@ package com.ashutosh1234ojha.mvvmbase.utils
 
 import com.ashutosh1234ojha.mvvmbase.data.login.LoginResponse
 import com.ashutosh1234ojha.mvvmbase.model.CommonResponse
+import com.ashutosh1234ojha.mvvmbase.network.NetworkConnectionInterceptor
+import com.ashutosh1234ojha.mvvmbase.network.NoConnectivityException
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -20,6 +22,8 @@ suspend fun <T : Any> handleApi(
         } else {
             NetworkResult.Error(code = response.code(), message = response.message())
         }
+    } catch (e: NoConnectivityException) {
+        NetworkResult.Error(code = 501, message = e.message)
     } catch (e: HttpException) {
         NetworkResult.Error(code = e.code(), message = e.message())
     } catch (e: Throwable) {
@@ -28,7 +32,7 @@ suspend fun <T : Any> handleApi(
 }
 
 sealed class NetworkResult<T : Any> {
-    class Success<T: Any>(val data: T) : NetworkResult<T>()
-    class Error<T: Any>(val code: Int, val message: String?) : NetworkResult<T>()
-    class Exception<T: Any>(val e: Throwable) : NetworkResult<T>()
+    class Success<T : Any>(val data: T) : NetworkResult<T>()
+    class Error<T : Any>(val code: Int, val message: String?) : NetworkResult<T>()
+    class Exception<T : Any>(val e: Throwable) : NetworkResult<T>()
 }

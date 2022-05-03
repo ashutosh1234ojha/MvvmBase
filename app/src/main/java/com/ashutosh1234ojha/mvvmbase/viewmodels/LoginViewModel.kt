@@ -62,27 +62,14 @@ class LoginViewModel @Inject constructor(
                                 }
 
                                 is NetworkResult.Error<*> -> {
-                                    //  _errorMsg.value = commonResponse.
+                                    _errorMsg.value = commonResponse.message!!
 
                                 }
                                 is NetworkResult.Exception<*> -> {
                                     _errorMsg.value = "Something went wrong"
                                 }
                             }
-//                            if (commonResponse != null) {
-//                                val d = commonResponse as NetworkResult.Success<Data>
-//                                //   val linkedTreeMap = commonResponse as NetworkResult
-////                                val linkedTreeMap = commonResponse as LinkedTreeMap<Any, Any>
-////                                val data = Data(
-////                                    linkedTreeMap["Email"].toString(),
-////                                    linkedTreeMap["Id"].toString(),
-////                                    linkedTreeMap["Name"].toString(),
-////                                    linkedTreeMap["Token"].toString()
-////                                )
-//                                _successLogin.value = d.data
-//                            } else {
-//                                //  _errorMsg.value = commonResponse.
-//                            }
+
                         }
                 }
             }
