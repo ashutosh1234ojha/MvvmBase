@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Ashutosh Ojha on 10,March,2022
@@ -30,10 +31,11 @@ class NetworkModule {
     }
 
     private fun getClient(appContext: Context): OkHttpClient {
-//        val logger = NetworkConnectionInterceptor().apply {
-//            level = HttpLoggingInterceptor.Level.BASIC }
         val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(logger)
             .addInterceptor(NetworkConnectionInterceptor(appContext))
             .build()
