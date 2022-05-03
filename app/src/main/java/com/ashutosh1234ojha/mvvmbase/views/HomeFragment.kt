@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ashutosh1234ojha.mvvmbase.R
 import com.ashutosh1234ojha.mvvmbase.databinding.FragmentHomeBinding
 import com.ashutosh1234ojha.mvvmbase.databinding.FragmentLoginBinding
+import com.ashutosh1234ojha.mvvmbase.viewmodels.HomeViewModel
 import com.ashutosh1234ojha.mvvmbase.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,20 +26,27 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var loginBinding: FragmentHomeBinding
+    private lateinit var homeBinding: FragmentHomeBinding
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginBinding = getViewDataBinding()
+        homeBinding = getViewDataBinding()
 //        loginBinding.loginViewModel = viewModel
 //        loginBinding.handler = this
 //        setErrorListener(viewModel, loginBinding)
+        homeBinding.btnRegister.setOnClickListener {
+            val name = homeBinding.etName.text.toString()
+            val email = homeBinding.etEmail.text.toString()
+            val password = homeBinding.etPassword.text.toString()
+
+            viewModel.registerUser(name, email,password)
+        }
+
 
     }
-
 
 
     override fun getLayoutId(): Int {

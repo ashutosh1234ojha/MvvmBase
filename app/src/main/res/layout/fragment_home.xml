@@ -16,10 +16,54 @@
             android:layout_height="wrap_content"
             android:text="Home"
             android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/app_name"
+            android:padding="6dp"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/etEmail" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/email"
+            android:padding="6dp"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/etPassword" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/password"
+            android:padding="6dp"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/guideCenter" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in"
+            app:layout_constraintTop_toBottomOf="@+id/guideCenter" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

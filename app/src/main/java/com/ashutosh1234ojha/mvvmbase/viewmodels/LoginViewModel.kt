@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ashutosh1234ojha.mvvmbase.data.login.Data
+import com.ashutosh1234ojha.mvvmbase.data.login.LoginResponse
 import com.ashutosh1234ojha.mvvmbase.model.LoginRequest
 import com.ashutosh1234ojha.mvvmbase.repository.LoginRepository
+import com.ashutosh1234ojha.mvvmbase.utils.NetworkResult
 import com.google.gson.internal.LinkedTreeMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -49,21 +51,38 @@ class LoginViewModel @Inject constructor(
             else -> {
 
                 viewModelScope.launch {
-                    loginRepository.loginApi<Data>(user.email, user.password)
+                    loginRepository.loginApi(user.email, user.password)
                         .collect { commonResponse ->
-                            if (commonResponse.data != null) {
-                                val linkedTreeMap = commonResponse.data as LinkedTreeMap<Any, Any>
-                                val data = Data(
-                                    linkedTreeMap["Email"].toString(),
-                                    linkedTreeMap["id"].toString(),
-                                    linkedTreeMap["Id"].toString(),
-                                    linkedTreeMap["Name"].toString(),
-                                    linkedTreeMap["Token"].toString()
-                                )
-                                _successLogin.value = data
-                            } else {
-                                _errorMsg.value = commonResponse.message
+
+                            Log.d("c", commonResponse.toString())
+
+                            when (commonResponse) {
+                                is NetworkResult.Success<LoginResponse> -> {
+                                    _successLogin.value = commonResponse.data.data
+                                }
+
+                                is NetworkResult.Error<*> -> {
+                                    //  _errorMsg.value = commonResponse.
+
+                                }
+                                is NetworkResult.Exception<*> -> {
+                                    _errorMsg.value = "Something went wrong"
+                                }
                             }
+//                            if (commonResponse != null) {
+//                                val d = commonResponse as NetworkResult.Success<Data>
+//                                //   val linkedTreeMap = commonResponse as NetworkResult
+////                                val linkedTreeMap = commonResponse as LinkedTreeMap<Any, Any>
+////                                val data = Data(
+////                                    linkedTreeMap["Email"].toString(),
+////                                    linkedTreeMap["Id"].toString(),
+////                                    linkedTreeMap["Name"].toString(),
+////                                    linkedTreeMap["Token"].toString()
+////                                )
+//                                _successLogin.value = d.data
+//                            } else {
+//                                //  _errorMsg.value = commonResponse.
+//                            }
                         }
                 }
             }
